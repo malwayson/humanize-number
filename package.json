@@ -1,6 +1,6 @@
 {
   "name": "@malwayson/humanize-number",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Convert numbers to human readable format with support for data, weight, distance, currency and generic formats. Includes metric and imperial unit systems with conversion capabilities.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,12 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "example:basic": "npm run build && node dist/examples/basic-usage.js",
+    "example:advanced": "npm run build && node dist/examples/advanced-features.js",
+    "example:real-world": "npm run build && node dist/examples/real-world.js",
+    "example:comprehensive": "npm run build && node dist/examples/comprehensive.js",
+    "examples": "npm run build && node dist/examples/basic-usage.js && node dist/examples/advanced-features.js && node dist/examples/real-world.js"
   },
   "keywords": [
     "humanize",
