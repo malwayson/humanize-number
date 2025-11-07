@@ -1,6 +1,6 @@
 {
   "name": "@malwayson/humanize-number",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Convert numbers to human readable format with support for 10 format methods including data, weight, distance, currency, temperature, duration, speed, volume, percentage and generic formats. Features metric/imperial unit systems, localization, presets, batch processing, and comparison utilities.",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
