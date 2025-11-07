@@ -1,12 +1,113 @@
 {
   "name": "@malwayson/humanize-number",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Convert numbers to human readable format with support for 10 format methods including data, weight, distance, currency, temperature, duration, speed, volume, percentage and generic formats. Features metric/imperial unit systems, localization, presets, batch processing, and comparison utilities.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./locales/en-US": {
+      "import": "./dist/esm/locales/en-US.js",
+      "require": "./dist/locales/en-US.js",
+      "types": "./dist/locales/en-US.d.ts"
+    },
+    "./locales/en-GB": {
+      "import": "./dist/esm/locales/en-GB.js",
+      "require": "./dist/locales/en-GB.js",
+      "types": "./dist/locales/en-GB.d.ts"
+    },
+    "./locales/de-DE": {
+      "import": "./dist/esm/locales/de-DE.js",
+      "require": "./dist/locales/de-DE.js",
+      "types": "./dist/locales/de-DE.d.ts"
+    },
+    "./locales/fr-FR": {
+      "import": "./dist/esm/locales/fr-FR.js",
+      "require": "./dist/locales/fr-FR.js",
+      "types": "./dist/locales/fr-FR.d.ts"
+    },
+    "./locales/es-ES": {
+      "import": "./dist/esm/locales/es-ES.js",
+      "require": "./dist/locales/es-ES.js",
+      "types": "./dist/locales/es-ES.d.ts"
+    },
+    "./locales/ja-JP": {
+      "import": "./dist/esm/locales/ja-JP.js",
+      "require": "./dist/locales/ja-JP.js",
+      "types": "./dist/locales/ja-JP.d.ts"
+    },
+    "./locales/zh-CN": {
+      "import": "./dist/esm/locales/zh-CN.js",
+      "require": "./dist/locales/zh-CN.js",
+      "types": "./dist/locales/zh-CN.d.ts"
+    },
+    "./locales/pt-BR": {
+      "import": "./dist/esm/locales/pt-BR.js",
+      "require": "./dist/locales/pt-BR.js",
+      "types": "./dist/locales/pt-BR.d.ts"
+    },
+    "./locales/ru-RU": {
+      "import": "./dist/esm/locales/ru-RU.js",
+      "require": "./dist/locales/ru-RU.js",
+      "types": "./dist/locales/ru-RU.d.ts"
+    },
+    "./presets/compact": {
+      "import": "./dist/esm/presets/compact.js",
+      "require": "./dist/presets/compact.js",
+      "types": "./dist/presets/compact.d.ts"
+    },
+    "./presets/verbose": {
+      "import": "./dist/esm/presets/verbose.js",
+      "require": "./dist/presets/verbose.js",
+      "types": "./dist/presets/verbose.d.ts"
+    },
+    "./presets/financial": {
+      "import": "./dist/esm/presets/financial.js",
+      "require": "./dist/presets/financial.js",
+      "types": "./dist/presets/financial.d.ts"
+    },
+    "./presets/scientific": {
+      "import": "./dist/esm/presets/scientific.js",
+      "require": "./dist/presets/scientific.js",
+      "types": "./dist/presets/scientific.d.ts"
+    },
+    "./presets/approximate": {
+      "import": "./dist/esm/presets/approximate.js",
+      "require": "./dist/presets/approximate.js",
+      "types": "./dist/presets/approximate.d.ts"
+    },
+    "./presets/metric": {
+      "import": "./dist/esm/presets/metric.js",
+      "require": "./dist/presets/metric.js",
+      "types": "./dist/presets/metric.d.ts"
+    },
+    "./presets/imperial": {
+      "import": "./dist/esm/presets/imperial.js",
+      "require": "./dist/presets/imperial.js",
+      "types": "./dist/presets/imperial.d.ts"
+    },
+    "./presets/minimal": {
+      "import": "./dist/esm/presets/minimal.js",
+      "require": "./dist/presets/minimal.js",
+      "types": "./dist/presets/minimal.d.ts"
+    },
+    "./presets/detailed": {
+      "import": "./dist/esm/presets/detailed.js",
+      "require": "./dist/presets/detailed.js",
+      "types": "./dist/presets/detailed.d.ts"
+    }
+  },
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:cjs && npm run build:esm && npm run minify",
+    "build:cjs": "tsc",
+    "build:esm": "tsc -p tsconfig.esm.json",
     "build:examples": "tsc -p tsconfig.examples.json",
+    "minify": "node scripts/minify.js",
     "dev": "tsc --watch",
     "test": "jest",
     "prepublishOnly": "npm run build",
@@ -58,6 +159,7 @@
     "@types/jest": "^29.5.0",
     "@types/node": "^18.0.0",
     "jest": "^29.5.0",
+    "terser": "^5.44.1",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.0"
   },

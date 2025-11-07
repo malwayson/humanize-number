@@ -1,151 +1,47 @@
 import { LocaleCode, LocaleConfig } from "../types";
 
-// English (US)
-export const enUS: LocaleConfig = {
-  code: "en-US",
-  decimal: ".",
-  thousands: ",",
-  units: {},
-  suffixes: {
-    thousand: "K",
-    million: "M",
-    billion: "B",
-    trillion: "T",
-  },
-};
+// Re-export individual locales for tree-shaking
+export { deDE } from "./de-DE";
+export { enGB } from "./en-GB";
+export { enUS } from "./en-US";
+export { esES } from "./es-ES";
+export { frFR } from "./fr-FR";
+export { jaJP } from "./ja-JP";
+export { ptBR } from "./pt-BR";
+export { ruRU } from "./ru-RU";
+export { zhCN } from "./zh-CN";
 
-// English (GB)
-export const enGB: LocaleConfig = {
-  code: "en-GB",
-  decimal: ".",
-  thousands: ",",
-  units: {},
-  suffixes: {
-    thousand: "K",
-    million: "M",
-    billion: "B",
-    trillion: "T",
-  },
-};
-
-// German
-export const deDE: LocaleConfig = {
-  code: "de-DE",
-  decimal: ",",
-  thousands: ".",
-  units: {},
-  suffixes: {
-    thousand: "Tsd",
-    million: "Mio",
-    billion: "Mrd",
-    trillion: "Bio",
-  },
-};
-
-// French
-export const frFR: LocaleConfig = {
-  code: "fr-FR",
-  decimal: ",",
-  thousands: " ",
-  units: {},
-  suffixes: {
-    thousand: "K",
-    million: "M",
-    billion: "Mrd",
-    trillion: "T",
-  },
-};
-
-// Spanish
-export const esES: LocaleConfig = {
-  code: "es-ES",
-  decimal: ",",
-  thousands: ".",
-  units: {},
-  suffixes: {
-    thousand: "mil",
-    million: "M",
-    billion: "mil M",
-    trillion: "B",
-  },
-};
-
-// Japanese
-export const jaJP: LocaleConfig = {
-  code: "ja-JP",
-  decimal: ".",
-  thousands: ",",
-  units: {},
-  suffixes: {
-    thousand: "千",
-    million: "百万",
-    billion: "十億",
-    trillion: "兆",
-  },
-};
-
-// Chinese (Simplified)
-export const zhCN: LocaleConfig = {
-  code: "zh-CN",
-  decimal: ".",
-  thousands: ",",
-  units: {},
-  suffixes: {
-    thousand: "千",
-    million: "百万",
-    billion: "十亿",
-    trillion: "万亿",
-  },
-};
-
-// Portuguese (Brazil)
-export const ptBR: LocaleConfig = {
-  code: "pt-BR",
-  decimal: ",",
-  thousands: ".",
-  units: {},
-  suffixes: {
-    thousand: "mil",
-    million: "mi",
-    billion: "bi",
-    trillion: "tri",
-  },
-};
-
-// Russian
-export const ruRU: LocaleConfig = {
-  code: "ru-RU",
-  decimal: ",",
-  thousands: " ",
-  units: {},
-  suffixes: {
-    thousand: "тыс",
-    million: "млн",
-    billion: "млрд",
-    trillion: "трлн",
-  },
-};
+// Import for locales object
+import deDELocale from "./de-DE";
+import enGBLocale from "./en-GB";
+import enUSLocale from "./en-US";
+import esESLocale from "./es-ES";
+import frFRLocale from "./fr-FR";
+import jaJPLocale from "./ja-JP";
+import ptBRLocale from "./pt-BR";
+import ruRULocale from "./ru-RU";
+import zhCNLocale from "./zh-CN";
 
 /**
  * Locale registry
  */
 export const locales: Record<LocaleCode, LocaleConfig> = {
-  "en-US": enUS,
-  "en-GB": enGB,
-  "de-DE": deDE,
-  "fr-FR": frFR,
-  "es-ES": esES,
-  "ja-JP": jaJP,
-  "zh-CN": zhCN,
-  "pt-BR": ptBR,
-  "ru-RU": ruRU,
+  "en-US": enUSLocale,
+  "en-GB": enGBLocale,
+  "de-DE": deDELocale,
+  "fr-FR": frFRLocale,
+  "es-ES": esESLocale,
+  "ja-JP": jaJPLocale,
+  "zh-CN": zhCNLocale,
+  "pt-BR": ptBRLocale,
+  "ru-RU": ruRULocale,
 };
 
 /**
  * Get locale configuration
  */
 export function getLocale(code: LocaleCode): LocaleConfig {
-  return locales[code] || enUS;
+  return locales[code] || enUSLocale;
 }
 
 /**
