@@ -1,106 +1,40 @@
 import { HumanizeOptions } from "../types";
 
-/**
- * Compact preset - minimal formatting, no spaces, no decimals
- */
-export const compact: HumanizeOptions = {
-  precision: 0,
-  spacer: "",
-  round: true,
-  lowercase: false,
-};
+// Re-export individual presets for tree-shaking
+export { approximate } from "./approximate";
+export { compact } from "./compact";
+export { detailed } from "./detailed";
+export { financial } from "./financial";
+export { imperial } from "./imperial";
+export { metric } from "./metric";
+export { minimal } from "./minimal";
+export { scientific } from "./scientific";
+export { verbose } from "./verbose";
 
-/**
- * Verbose preset - full unit names, maximum readability
- */
-export const verbose: HumanizeOptions = {
-  precision: 2,
-  spacer: " ",
-  verboseUnits: true,
-  lowercase: false,
-};
-
-/**
- * Financial preset - currency-style formatting with proper delimiters
- */
-export const financial: HumanizeOptions = {
-  precision: 2,
-  delimiter: ",",
-  separator: ".",
-  spacer: "",
-  round: false,
-};
-
-/**
- * Scientific preset - scientific notation for very large/small numbers
- */
-export const scientific: HumanizeOptions = {
-  precision: 3,
-  scientific: true,
-  spacer: " ",
-};
-
-/**
- * Approximate preset - rounded with approximation symbol
- */
-export const approximate: HumanizeOptions = {
-  precision: 1,
-  approximate: true,
-  round: false,
-  spacer: " ",
-};
-
-/**
- * Metric preset - explicit metric system
- */
-export const metric: HumanizeOptions = {
-  unitSystem: "metric",
-  precision: 2,
-  spacer: " ",
-};
-
-/**
- * Imperial preset - explicit imperial system
- */
-export const imperial: HumanizeOptions = {
-  unitSystem: "imperial",
-  precision: 2,
-  spacer: " ",
-};
-
-/**
- * Minimal preset - absolute minimal formatting
- */
-export const minimal: HumanizeOptions = {
-  precision: 0,
-  spacer: "",
-  delimiter: "",
-  round: true,
-};
-
-/**
- * Detailed preset - maximum detail and precision
- */
-export const detailed: HumanizeOptions = {
-  precision: 4,
-  spacer: " ",
-  delimiter: ",",
-  verboseUnits: true,
-};
+// Import for presets object
+import approximatePreset from "./approximate";
+import compactPreset from "./compact";
+import detailedPreset from "./detailed";
+import financialPreset from "./financial";
+import imperialPreset from "./imperial";
+import metricPreset from "./metric";
+import minimalPreset from "./minimal";
+import scientificPreset from "./scientific";
+import verbosePreset from "./verbose";
 
 /**
  * Collection of all presets
  */
 export const presets = {
-  compact,
-  verbose,
-  financial,
-  scientific,
-  approximate,
-  metric,
-  imperial,
-  minimal,
-  detailed,
+  compact: compactPreset,
+  verbose: verbosePreset,
+  financial: financialPreset,
+  scientific: scientificPreset,
+  approximate: approximatePreset,
+  metric: metricPreset,
+  imperial: imperialPreset,
+  minimal: minimalPreset,
+  detailed: detailedPreset,
 };
 
 /**

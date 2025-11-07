@@ -1,5 +1,12 @@
 # @malwayson/humanize-number
 
+[![npm version](https://img.shields.io/npm/v/@malwayson/humanize-number.svg)](https://www.npmjs.com/package/@malwayson/humanize-number)
+[![npm downloads](https://img.shields.io/npm/dm/@malwayson/humanize-number.svg)](https://www.npmjs.com/package/@malwayson/humanize-number)
+[![Build Status](https://github.com/malwayson/humanize-number/workflows/CI/badge.svg)](https://github.com/malwayson/humanize-number/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@malwayson/humanize-number)](https://bundlephobia.com/package/@malwayson/humanize-number)
+
 A powerful TypeScript library to convert numbers into human-readable formats with support for various format methods including data sizes, weights, distances, currency, temperature, duration, speed, volume, and more.
 
 ## Installation
@@ -7,6 +14,42 @@ A powerful TypeScript library to convert numbers into human-readable formats wit
 ```bash
 npm install @malwayson/humanize-number
 ```
+
+## Module System Support
+
+This package supports both **CommonJS** and **ES Modules** (ESM) for maximum compatibility:
+
+```typescript
+// ESM (recommended for modern bundlers)
+import { humanizeNumber } from "@malwayson/humanize-number";
+
+// CommonJS
+const { humanizeNumber } = require("@malwayson/humanize-number");
+```
+
+### Tree-Shaking Support
+
+The package is fully tree-shakeable! Import only what you need to reduce bundle size:
+
+```typescript
+// Import specific locales (reduces bundle size)
+import enUS from "@malwayson/humanize-number/locales/en-US";
+import deDE from "@malwayson/humanize-number/locales/de-DE";
+
+// Import specific presets
+import compact from "@malwayson/humanize-number/presets/compact";
+import verbose from "@malwayson/humanize-number/presets/verbose";
+
+// Use them directly
+humanizeNumber(1234567, "generic", { ...compact, locale: enUS });
+```
+
+### Benefits:
+
+- ✅ **Smaller bundles**: Only include locales/presets you actually use
+- ✅ **Better tree-shaking**: Modern bundlers can eliminate unused code
+- ✅ **Faster load times**: Reduced JavaScript payload
+- ✅ **ESM & CJS**: Works with both module systems
 
 ## ✨ What's New in v2.0
 
