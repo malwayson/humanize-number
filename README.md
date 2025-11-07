@@ -298,8 +298,9 @@ import { humanizeNumber } from "@malwayson/humanize-number";
 // German (Germany) - uses comma for decimal
 humanizeNumber(1234.56, "generic", { locale: "de-DE" }); // "1,23 K"
 
-// French (France) - uses space for thousands
+// French (France) - uses comma for decimal, space for thousands
 humanizeNumber(1234567, "generic", { locale: "fr-FR" }); // "1,23 M"
+humanizeNumber(1234567, "generic", { locale: "fr-FR", precision: 0 }); // "1 235 K" (shows space separator)
 
 // Japanese (Japan)
 humanizeNumber(1234567, "generic", { locale: "ja-JP" }); // "1.23 M"
