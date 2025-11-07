@@ -4,15 +4,15 @@
     "module": "commonjs",
     "lib": ["ES2018"],
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "removeComments": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "removeComments": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -24,7 +24,7 @@
     "emitDecoratorMetadata": true
   },
   "include": [
-    "index.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
