@@ -6,14 +6,15 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "build:examples": "tsc -p tsconfig.examples.json",
     "dev": "tsc --watch",
     "test": "jest",
     "prepublishOnly": "npm run build",
-    "example:basic": "npm run build && node dist/examples/basic-usage.js",
-    "example:advanced": "npm run build && node dist/examples/advanced-features.js",
-    "example:real-world": "npm run build && node dist/examples/real-world.js",
-    "example:comprehensive": "npm run build && node dist/examples/comprehensive.js",
-    "examples": "npm run build && node dist/examples/basic-usage.js && node dist/examples/advanced-features.js && node dist/examples/real-world.js"
+    "example:basic": "npm run build:examples && node dist/examples/basic-usage.js",
+    "example:advanced": "npm run build:examples && node dist/examples/advanced-features.js",
+    "example:real-world": "npm run build:examples && node dist/examples/real-world.js",
+    "example:comprehensive": "npm run build:examples && node dist/examples/comprehensive.js",
+    "examples": "npm run build:examples && node dist/examples/basic-usage.js && node dist/examples/advanced-features.js && node dist/examples/real-world.js"
   },
   "keywords": [
     "humanize",
@@ -61,7 +62,8 @@
     "typescript": "^5.0.0"
   },
   "files": [
-    "dist/**/*",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
     "README.md",
     "CHANGELOG.md",
     "MIGRATION.md",
