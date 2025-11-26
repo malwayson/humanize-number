@@ -1,10 +1,11 @@
 {
   "name": "@malwayson/humanize-number",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Convert numbers to human readable format with support for 17 format methods including area, energy, pressure, frequency, angle, power, transfer-rate, relative time, fractions, and more. Features LRU caching, templates, value diff tracking, metric/imperial unit systems, localization, presets, and batch processing.",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",
