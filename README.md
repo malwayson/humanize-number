@@ -9,6 +9,12 @@
 
 A powerful TypeScript library to convert numbers into human-readable formats with support for various format methods including data sizes, weights, distances, currency, temperature, duration, speed, volume, and more.
 
+---
+
+💖 **Support this project**: If you find this package useful, consider [supporting us via PayPal](https://www.paypal.com/ncp/payment/RXETC4BPH3FUW). Your support helps maintain and improve this library!
+
+---
+
 ## Installation
 
 ```bash
