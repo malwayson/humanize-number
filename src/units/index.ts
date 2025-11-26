@@ -158,6 +158,138 @@ export const PERCENTAGE_UNITS = {
   ],
 };
 
+// v3.0: Area units
+export const AREA_UNITS = {
+  metric: [
+    { value: 1000000, symbol: "km²", name: "square kilometers" },
+    { value: 10000, symbol: "ha", name: "hectares" },
+    { value: 1, symbol: "m²", name: "square meters" },
+    { value: 0.01, symbol: "dm²", name: "square decimeters" },
+    { value: 0.0001, symbol: "cm²", name: "square centimeters" },
+  ],
+  imperial: [
+    { value: 2589988, symbol: "sq mi", name: "square miles" },
+    { value: 4046.86, symbol: "ac", name: "acres" },
+    { value: 0.836127, symbol: "sq yd", name: "square yards" },
+    { value: 0.092903, symbol: "sq ft", name: "square feet" },
+    { value: 0.00064516, symbol: "sq in", name: "square inches" },
+  ],
+};
+
+// v3.0: Energy units
+export const ENERGY_UNITS = {
+  metric: [
+    { value: 3600000, symbol: "kWh", name: "kilowatt-hours" },
+    { value: 4184, symbol: "kcal", name: "kilocalories" },
+    { value: 1000, symbol: "kJ", name: "kilojoules" },
+    { value: 1, symbol: "J", name: "joules" },
+    { value: 0.001, symbol: "mJ", name: "millijoules" },
+  ],
+  imperial: [
+    { value: 1055055.85, symbol: "BTU", name: "British thermal units" },
+    { value: 3600000, symbol: "kWh", name: "kilowatt-hours" },
+    { value: 4184, symbol: "kcal", name: "kilocalories" },
+    { value: 4.184, symbol: "cal", name: "calories" },
+    { value: 1, symbol: "J", name: "joules" },
+  ],
+};
+
+// v3.0: Pressure units
+export const PRESSURE_UNITS = {
+  metric: [
+    { value: 1000000, symbol: "MPa", name: "megapascals" },
+    { value: 100000, symbol: "bar", name: "bars" },
+    { value: 1000, symbol: "kPa", name: "kilopascals" },
+    { value: 1, symbol: "Pa", name: "pascals" },
+  ],
+  imperial: [
+    { value: 101325, symbol: "atm", name: "atmospheres" },
+    { value: 6894.76, symbol: "PSI", name: "pounds per square inch" },
+    { value: 3386.39, symbol: "inHg", name: "inches of mercury" },
+    { value: 133.322, symbol: "mmHg", name: "millimeters of mercury" },
+  ],
+};
+
+// v3.0: Frequency units
+export const FREQUENCY_UNITS = {
+  metric: [
+    { value: 1000000000, symbol: "GHz", name: "gigahertz" },
+    { value: 1000000, symbol: "MHz", name: "megahertz" },
+    { value: 1000, symbol: "kHz", name: "kilohertz" },
+    { value: 1, symbol: "Hz", name: "hertz" },
+  ],
+  imperial: [
+    { value: 1000000000, symbol: "GHz", name: "gigahertz" },
+    { value: 1000000, symbol: "MHz", name: "megahertz" },
+    { value: 1000, symbol: "kHz", name: "kilohertz" },
+    { value: 1, symbol: "Hz", name: "hertz" },
+  ],
+};
+
+// v3.0: Angle units
+export const ANGLE_UNITS = {
+  metric: [
+    { value: 1, symbol: "°", name: "degrees" },
+    { value: 0.0174533, symbol: "rad", name: "radians" },
+    { value: 0.9, symbol: "grad", name: "gradians" },
+  ],
+  imperial: [
+    { value: 1, symbol: "°", name: "degrees" },
+    { value: 0.0174533, symbol: "rad", name: "radians" },
+    { value: 0.9, symbol: "grad", name: "gradians" },
+  ],
+};
+
+// v3.0: Power units
+export const POWER_UNITS = {
+  metric: [
+    { value: 1000000, symbol: "MW", name: "megawatts" },
+    { value: 1000, symbol: "kW", name: "kilowatts" },
+    { value: 1, symbol: "W", name: "watts" },
+    { value: 0.001, symbol: "mW", name: "milliwatts" },
+  ],
+  imperial: [
+    { value: 745.7, symbol: "hp", name: "horsepower" },
+    { value: 1000, symbol: "kW", name: "kilowatts" },
+    { value: 1, symbol: "W", name: "watts" },
+    { value: 0.001, symbol: "mW", name: "milliwatts" },
+  ],
+};
+
+// v3.0: Transfer rate units (bytes per second)
+export const TRANSFER_RATE_UNITS = {
+  metric: {
+    bytes: [
+      { value: 1024 ** 4, symbol: "TB/s", name: "terabytes per second" },
+      { value: 1024 ** 3, symbol: "GB/s", name: "gigabytes per second" },
+      { value: 1024 ** 2, symbol: "MB/s", name: "megabytes per second" },
+      { value: 1024, symbol: "KB/s", name: "kilobytes per second" },
+      { value: 1, symbol: "B/s", name: "bytes per second" },
+    ],
+    bits: [
+      { value: 1000000000, symbol: "Gbps", name: "gigabits per second" },
+      { value: 1000000, symbol: "Mbps", name: "megabits per second" },
+      { value: 1000, symbol: "kbps", name: "kilobits per second" },
+      { value: 1, symbol: "bps", name: "bits per second" },
+    ],
+  },
+  imperial: {
+    bytes: [
+      { value: 1024 ** 4, symbol: "TB/s", name: "terabytes per second" },
+      { value: 1024 ** 3, symbol: "GB/s", name: "gigabytes per second" },
+      { value: 1024 ** 2, symbol: "MB/s", name: "megabytes per second" },
+      { value: 1024, symbol: "KB/s", name: "kilobytes per second" },
+      { value: 1, symbol: "B/s", name: "bytes per second" },
+    ],
+    bits: [
+      { value: 1000000000, symbol: "Gbps", name: "gigabits per second" },
+      { value: 1000000, symbol: "Mbps", name: "megabits per second" },
+      { value: 1000, symbol: "kbps", name: "kilobits per second" },
+      { value: 1, symbol: "bps", name: "bits per second" },
+    ],
+  },
+};
+
 // Export all units
 export const UNITS = {
   data: DATA_UNITS,
@@ -170,4 +302,12 @@ export const UNITS = {
   speed: SPEED_UNITS,
   volume: VOLUME_UNITS,
   percentage: PERCENTAGE_UNITS,
+  // v3.0 additions
+  area: AREA_UNITS,
+  energy: ENERGY_UNITS,
+  pressure: PRESSURE_UNITS,
+  frequency: FREQUENCY_UNITS,
+  angle: ANGLE_UNITS,
+  power: POWER_UNITS,
+  "transfer-rate": TRANSFER_RATE_UNITS,
 };

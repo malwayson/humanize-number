@@ -57,32 +57,45 @@ humanizeNumber(1234567, "generic", { ...compact, locale: enUS });
 - ✅ **Faster load times**: Reduced JavaScript payload
 - ✅ **ESM & CJS**: Works with both module systems
 
-## ✨ What's New in v2.0
+## ✨ What's New in v3.0
 
-- 🌡️ **Temperature formatting** with Celsius, Fahrenheit, and Kelvin support
-- ⏱️ **Duration formatting** from milliseconds to years
-- 🚀 **Speed formatting** with km/h, mph, m/s, and knots
-- 💧 **Volume formatting** with liters and gallons
-- 📊 **Percentage formatting** with precision control
-- 🔬 **Scientific notation** support
-- 🌍 **Localization** with 9 built-in locales
-- 🎯 **Presets** for common use cases (compact, verbose, financial, etc.)
-- 📦 **Batch processing** for arrays and objects
-- 📏 **Range formatting** for displaying value ranges
-- 🔍 **Comparison utilities** for sorting and comparing humanized values
-- 🧩 **Modular architecture** with tree-shaking support
+### 🚀 New Format Methods (7 additions)
+- 📐 **Area formatting** - m², km², acres, square feet
+- ⚡ **Energy formatting** - Joules, kJ, MJ, BTU, calories
+- 💨 **Pressure formatting** - Pa, kPa, bar, PSI
+- 📻 **Frequency formatting** - Hz, kHz, MHz, GHz
+- 📐 **Angle formatting** - degrees with ° symbol
+- 🔌 **Power formatting** - Watts, kW, MW, horsepower
+- 🌐 **Transfer rate formatting** - KB/s, MB/s, Mbps (bits/bytes)
+
+### 🎯 Advanced Features
+- ⏰ **Relative time formatting** - "2 hours ago", "in 5 days" (9 locales, 3 styles)
+- 📊 **Value diff tracking** - Calculate and format value changes with percentages
+- 📝 **Template formatting** - Multi-value string templates with placeholders
+- 🔢 **Fraction formatting** - Convert decimals to fractions (½, ¾, ⅓) with Unicode support
+- 🚀 **LRU Cache** - Built-in caching for performance optimization
+
+### 📈 From v2.0
+- 🌡️ Temperature, ⏱️ Duration, 🚀 Speed, 💧 Volume, 📊 Percentage
+- 🌍 Localization (9 locales), 🎯 Presets, 📦 Batch processing
+- 🔍 Comparison utilities, 🧩 Tree-shaking support
 
 ## Features
 
 - 🔢 Convert numbers to human-readable formats
-- 📊 Support for **10 format methods** (data, weight, distance, currency, temperature, duration, speed, volume, percentage, generic)
+- 📊 Support for **17 format methods** (data, weight, distance, currency, temperature, duration, speed, volume, percentage, area, energy, pressure, frequency, angle, power, transfer-rate, generic)
 - 🌍 **Multiple unit systems**: Metric and Imperial support
 - 🌐 **Internationalization**: 9 built-in locales (en-US, de-DE, fr-FR, es-ES, ja-JP, zh-CN, pt-BR, ru-RU, en-GB)
+- ⏰ **Relative time** formatting with multi-locale support
+- 📊 **Value diff tracking** with direction and percentage calculations
+- 📝 **Template system** for formatting multiple values
+- 🔢 **Fraction formatting** with Unicode support (½, ¾, ⅓)
+- 🚀 **LRU Cache** with TTL for performance optimization
 - ⚙️ Highly customizable formatting options
 - 🔄 Parse humanized strings back to numbers
 - 🔄 **Unit conversion** between metric and imperial systems
 - 📝 Full TypeScript support with comprehensive type definitions
-- 🧪 Comprehensive test coverage (35+ tests)
+- 🧪 Comprehensive test coverage (126 tests)
 - 🚀 Zero dependencies
 - 📦 Batch processing capabilities
 - 🔍 Built-in comparison and sorting utilities
@@ -128,6 +141,44 @@ humanizeNumber(1000, "weight", presets.verbose); // "1.00 kilograms"
 // Currency format
 humanizeNumber(1000000, "currency"); // "1 M"
 humanizeNumber(1500000, "currency"); // "1.5 M"
+
+// 🆕 v3.0 Features
+import {
+  humanizeArea,
+  humanizeEnergy,
+  humanizeRelativeTime,
+  humanizeDiff,
+  formatTemplate,
+  humanizeFraction,
+} from "@malwayson/humanize-number";
+
+// Area formatting
+humanizeArea(1000000, { unitSystem: "metric" }); // "1 km²"
+humanizeArea(4046.86, { unitSystem: "imperial" }); // "1 ac"
+
+// Energy formatting
+humanizeEnergy(1000, { unitSystem: "metric" }); // "1 kJ"
+
+// Relative time formatting
+humanizeRelativeTime(new Date(Date.now() - 3600000)); // "1 hour ago"
+humanizeRelativeTime(new Date(Date.now() + 7200000)); // "in 2 hours"
+
+// Value diff tracking
+const diff = humanizeDiff(1024, 2048, "data");
+console.log(diff.value); // "+1 KB"
+console.log(diff.direction); // "increase"
+console.log(diff.percentString); // "+100.0%"
+
+// Template formatting
+formatTemplate("Size: {size:data}, Speed: {speed:speed}", {
+  values: { size: 1048576, speed: 27.78 },
+  formats: {},
+}); // "Size: 1 MB, Speed: 100 km/h"
+
+// Fraction formatting
+humanizeFraction(0.5); // "1/2"
+humanizeFraction(0.75, { unicode: true }); // "¾"
+humanizeFraction(1.5, { mixed: true }); // "1 1/2"
 ```
 
 ## Format Methods
@@ -148,18 +199,35 @@ humanizeNumber(1500000, "currency"); // "1.5 M"
 - **`distance`**:
   - _Metric_: mm, cm, m, km, Mm (millimeters to megameters)
   - _Imperial_: in, ft, yd, mi (inches to miles)
-- **`volume`** 🆕:
+- **`volume`**:
   - _Metric_: mL, L, kL (milliliters to kiloliters)
   - _Imperial_: fl oz, cup, pt, qt, gal (fluid ounces to gallons)
-- **`speed`** 🆕:
+- **`speed`**:
   - _Metric_: m/s, km/h (meters per second, kilometers per hour)
   - _Imperial_: ft/s, mph, knots (feet per second, miles per hour, nautical miles per hour)
+- **`area`** 🆕:
+  - _Metric_: mm², cm², dm², m², km² (square millimeters to square kilometers)
+  - _Imperial_: in², ft², sq yd, ac (square inches to acres)
+- **`energy`** 🆕:
+  - _Metric_: J, kJ, MJ, cal, kcal (Joules to kilocalories)
+  - _Imperial_: cal, kcal, BTU (calories to British Thermal Units)
+- **`pressure`** 🆕:
+  - _Metric_: Pa, kPa, bar, atm (Pascals to atmospheres)
+  - _Imperial_: PSI (pounds per square inch)
+- **`frequency`** 🆕: Hz, kHz, MHz, GHz (Hertz to Gigahertz)
+- **`angle`** 🆕: degrees (°)
+- **`power`** 🆕:
+  - _Metric_: W, kW, MW (Watts to Megawatts)
+  - _Imperial_: hp (horsepower)
+- **`transfer-rate`** 🆕:
+  - _Bytes_: B/s, KB/s, MB/s, GB/s
+  - _Bits_: bps, kbps, Mbps, Gbps
 
 #### Special Formats
 
-- **`temperature`** 🆕: Supports Celsius (°C), Fahrenheit (°F), and Kelvin (K)
-- **`duration`** 🆕: ms, seconds, minutes, hours, days, weeks, months, years
-- **`percentage`** 🆕: Formats decimal values as percentages with % symbol
+- **`temperature`**: Supports Celsius (°C), Fahrenheit (°F), and Kelvin (K)
+- **`duration`**: ms, seconds, minutes, hours, days, weeks, months, years
+- **`percentage`**: Formats decimal values as percentages with % symbol
 
 ### Detailed Examples
 
@@ -243,6 +311,294 @@ humanizePercentage(0.1234); // "12.34%"
 humanizePercentage(0.5); // "50%"
 humanizePercentage(1.5); // "150%"
 humanizePercentage(0.999); // "99.9%"
+```
+
+### 🆕 v3.0 Format Methods
+
+#### Area
+
+```typescript
+import { humanizeArea } from "@malwayson/humanize-number";
+
+// Metric
+humanizeArea(1000000, { unitSystem: "metric" }); // "1 km²"
+humanizeArea(5000, { unitSystem: "metric" }); // "5,000 m²"
+humanizeArea(0.5, { unitSystem: "metric" }); // "50 dm²"
+
+// Imperial
+humanizeArea(4046.86, { unitSystem: "imperial" }); // "1 ac" (acre)
+humanizeArea(1, { unitSystem: "imperial" }); // "1.2 sq yd"
+
+// Verbose units
+humanizeArea(1000000, { unitSystem: "metric", verboseUnits: true }); 
+// "1 square kilometers"
+```
+
+#### Energy
+
+```typescript
+import { humanizeEnergy } from "@malwayson/humanize-number";
+
+// Metric
+humanizeEnergy(1000, { unitSystem: "metric" }); // "1 kJ"
+humanizeEnergy(1000000, { unitSystem: "metric" }); // "239.01 kcal"
+humanizeEnergy(500, { unitSystem: "metric" }); // "500 J"
+
+// Imperial
+humanizeEnergy(1055.06, { unitSystem: "imperial" }); // "252.17 cal"
+```
+
+#### Pressure
+
+```typescript
+import { humanizePressure } from "@malwayson/humanize-number";
+
+// Metric
+humanizePressure(101325, { unitSystem: "metric" }); // "1.01 bar" (atmospheric)
+humanizePressure(1000, { unitSystem: "metric" }); // "1 kPa"
+
+// Imperial
+humanizePressure(6894.76, { unitSystem: "imperial" }); // "1 PSI"
+humanizePressure(14000, { unitSystem: "imperial" }); // "2.03 PSI"
+```
+
+#### Frequency
+
+```typescript
+import { humanizeFrequency } from "@malwayson/humanize-number";
+
+humanizeFrequency(1000); // "1 kHz"
+humanizeFrequency(1000000); // "1 MHz"
+humanizeFrequency(1000000000); // "1 GHz"
+humanizeFrequency(500); // "500 Hz"
+
+// With precision
+humanizeFrequency(1234567, { precision: 3 }); // "1.235 MHz"
+```
+
+#### Angle
+
+```typescript
+import { humanizeAngle } from "@malwayson/humanize-number";
+
+humanizeAngle(45); // "45 °"
+humanizeAngle(180); // "180 °"
+humanizeAngle(360); // "360 °"
+
+// With precision
+humanizeAngle(45.678, { precision: 2 }); // "45.68 °"
+```
+
+#### Power
+
+```typescript
+import { humanizePower } from "@malwayson/humanize-number";
+
+// Metric
+humanizePower(1000, { unitSystem: "metric" }); // "1 kW"
+humanizePower(1000000, { unitSystem: "metric" }); // "1 MW"
+
+// Imperial
+humanizePower(745.7, { unitSystem: "imperial" }); // "1 hp" (horsepower)
+humanizePower(1500, { unitSystem: "imperial" }); // "2.01 hp"
+```
+
+#### Transfer Rate
+
+```typescript
+import { humanizeTransferRate } from "@malwayson/humanize-number";
+
+// Bytes per second (default)
+humanizeTransferRate(1024); // "1 KB/s/s"
+humanizeTransferRate(1048576); // "1 MB/s/s"
+humanizeTransferRate(1073741824); // "1 GB/s/s"
+
+// Bits per second
+humanizeTransferRate(1000, { bits: true } as any); // "1 kbps/s"
+humanizeTransferRate(1000000, { bits: true } as any); // "1 Mbps/s"
+```
+
+## 🆕 v3.0 Advanced Features
+
+### Relative Time Formatting
+
+Format timestamps as human-readable relative time expressions:
+
+```typescript
+import { humanizeRelativeTime, timeAgo, timeUntil } from "@malwayson/humanize-number";
+
+// Past times
+humanizeRelativeTime(new Date(Date.now() - 3600000)); // "1 hour ago"
+humanizeRelativeTime(new Date(Date.now() - 86400000)); // "1 day ago"
+
+// Future times
+humanizeRelativeTime(new Date(Date.now() + 7200000)); // "in 2 hours"
+humanizeRelativeTime(new Date(Date.now() + 604800000)); // "in 1 week"
+
+// With custom base date
+const now = new Date("2024-01-01T12:00:00Z");
+const past = new Date("2024-01-01T11:00:00Z");
+humanizeRelativeTime(past, { baseDate: now }); // "1 hour ago"
+
+// Different styles
+humanizeRelativeTime(past, { baseDate: now, style: "long" }); // "1 hour ago"
+humanizeRelativeTime(past, { baseDate: now, style: "short" }); // "1 hou ago"
+humanizeRelativeTime(past, { baseDate: now, style: "narrow" }); // "1 h ago"
+
+// Multiple locales supported
+humanizeRelativeTime(past, { baseDate: now, locale: "de-DE" }); // "vor 1 Stunde"
+humanizeRelativeTime(past, { baseDate: now, locale: "fr-FR" }); // "il y a 1 heure"
+humanizeRelativeTime(past, { baseDate: now, locale: "es-ES" }); // "hace 1 hora"
+humanizeRelativeTime(past, { baseDate: now, locale: "ja-JP" }); // "1時間前"
+humanizeRelativeTime(past, { baseDate: now, locale: "zh-CN" }); // "1小时前"
+
+// Shorthand helpers
+timeAgo(new Date(Date.now() - 3600000)); // "1 hour ago"
+timeUntil(new Date(Date.now() + 7200000)); // "in 2 hours"
+```
+
+**Supported locales**: en-US, en-GB, de-DE, fr-FR, es-ES, ja-JP, zh-CN, pt-BR, ru-RU
+
+### Value Diff Tracking
+
+Track and format value changes with direction and percentage:
+
+```typescript
+import { humanizeDiff, compareValues } from "@malwayson/humanize-number";
+
+// Calculate difference
+const diff = humanizeDiff(100, 150);
+console.log(diff.value); // "+50"
+console.log(diff.raw); // 50
+console.log(diff.direction); // "increase"
+console.log(diff.percent); // 50
+console.log(diff.percentString); // "+50.0%"
+
+// Decrease
+const decrease = humanizeDiff(150, 100);
+console.log(decrease.value); // "-50"
+console.log(decrease.direction); // "decrease"
+console.log(decrease.percentString); // "-33.3%"
+
+// With formatting
+const formattedDiff = humanizeDiff(1024, 2048, "data");
+console.log(formattedDiff.value); // "+1 KB"
+
+// With custom precision
+const preciseDiff = humanizeDiff(100, 150.678, "generic", { precision: 3 });
+console.log(preciseDiff.value); // "+50.678"
+
+// Compare values
+compareValues(100, 150); // -1 (first is smaller)
+compareValues(150, 100); // 1 (first is larger)
+compareValues(100, 100); // 0 (equal)
+```
+
+### Template Formatting
+
+Format multiple values in a single template string:
+
+```typescript
+import { formatTemplate, formatList, formatKeyValue, formatTableRow } 
+  from "@malwayson/humanize-number";
+
+// Template with placeholders
+const result = formatTemplate(
+  "File: {size:data}, Speed: {speed:speed}, Distance: {distance:distance}",
+  {
+    values: { size: 1048576, speed: 27.78, distance: 5000 },
+    formats: {},
+  }
+);
+// "File: 1 MB, Speed: 100 km/h, Distance: 5 km"
+
+// Custom default options
+formatTemplate("Size: {size:data}", {
+  values: { size: 1024 },
+  formats: {},
+  defaultOptions: { precision: 3 },
+}); // "Size: 1 KB"
+
+// Format arrays
+formatList([1024, 2048, 4096], "data"); 
+// "1 KB, 2 KB, 4 KB"
+
+formatList([1024, 2048], "data", {}, " | "); 
+// "1 KB | 2 KB"
+
+// Format key-value pairs
+formatKeyValue(
+  { "File Size": 1024, "Download Speed": 1048576 },
+  { "File Size": "data", "Download Speed": "data" }
+); // "File Size: 1 KB, Download Speed: 1 MB"
+
+// Format table rows
+formatTableRow([1024, 100000], ["data", "speed"]);
+// "1 KB\t360,000 km/h"
+```
+
+### Fraction Formatting
+
+Convert decimal numbers to fractions:
+
+```typescript
+import { humanizeFraction, parseFraction } from "@malwayson/humanize-number";
+
+// Simple fractions
+humanizeFraction(0.5); // "1/2"
+humanizeFraction(0.25); // "1/4"
+humanizeFraction(0.75); // "3/4"
+humanizeFraction(0.333); // "1/3"
+
+// Mixed fractions
+humanizeFraction(1.5, { mixed: true }); // "1 1/2"
+humanizeFraction(2.25, { mixed: true }); // "2 1/4"
+
+// Improper fractions
+humanizeFraction(1.5, { improper: true }); // "3/2"
+
+// Unicode fractions
+humanizeFraction(0.5, { unicode: true }); // "½"
+humanizeFraction(0.25, { unicode: true }); // "¼"
+humanizeFraction(0.75, { unicode: true }); // "¾"
+humanizeFraction(0.333, { unicode: true }); // "⅓"
+
+// Max denominator control
+humanizeFraction(0.142857, { maxDenominator: 10 }); // "1/7"
+
+// Parse fractions back to decimals
+parseFraction("1/2"); // 0.5
+parseFraction("1 1/2"); // 1.5
+parseFraction("½"); // 0.5
+parseFraction("¾"); // 0.75
+```
+
+### LRU Cache
+
+Built-in caching for improved performance:
+
+```typescript
+import { LRUCache, globalCache } from "@malwayson/humanize-number";
+
+// Create custom cache
+const cache = new LRUCache<string, number>({ 
+  maxSize: 100,  // Maximum entries
+  ttl: 60000,    // Time to live in ms (optional)
+});
+
+cache.set("key", 123);
+cache.get("key"); // 123
+
+// Global cache (used internally)
+globalCache.enable();
+globalCache.disable();
+globalCache.clear();
+
+// Get statistics
+const stats = globalCache.getStats();
+console.log(stats.size);      // Current cache size
+console.log(stats.maxSize);   // Maximum size
+console.log(stats.enabled);   // Cache enabled status
 ```
 
 ## 🎯 Presets
