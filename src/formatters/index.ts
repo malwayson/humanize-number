@@ -89,12 +89,17 @@ export function humanizeNumber(
     return formatDuration(validValue, verboseUnits, spacer);
   }
 
+  // Handle transfer-rate (special case with bits/bytes)
+  if (formatMethod === "transfer-rate") {
+    return formatTransferRate(validValue, options);
+  }
+
   // Get absolute value for calculations
   const absValue = Math.abs(validValue);
   const isNegative = validValue < 0;
 
   // Find the appropriate unit
-  const units = UNITS[formatMethod][unitSystem];
+  const units = getUnitsForFormat(formatMethod, unitSystem, options);
   const unit = findAppropriateUnit(absValue, units);
 
   // Calculate the converted value
@@ -135,6 +140,35 @@ export function humanizeNumber(
 }
 
 /**
+ * Get units for a format method (handles special cases)
+ */
+function getUnitsForFormat(
+  formatMethod: FormatMethod,
+  unitSystem: UnitSystem,
+  options: HumanizeOptions
+): any[] {
+  // Format methods without units
+  if (
+    formatMethod === "fraction" ||
+    formatMethod === "relative-time" ||
+    formatMethod === "percentage" ||
+    formatMethod === "duration"
+  ) {
+    return [];
+  }
+
+  if (formatMethod === "transfer-rate") {
+    const bits = (options as any).bits || false;
+    return (UNITS[formatMethod][unitSystem] as any)[bits ? "bits" : "bytes"];
+  }
+
+  const formatUnits = (UNITS as any)[formatMethod];
+  if (!formatUnits) return [];
+
+  return formatUnits[unitSystem] || [];
+}
+
+/**
  * Get the base unit for a format method
  */
 function getBaseUnit(
@@ -143,15 +177,70 @@ function getBaseUnit(
   verboseUnits: boolean,
   customUnits: Record<string, string>
 ): string {
-  const units = UNITS[formatMethod]?.[unitSystem];
-  if (!units || units.length === 0) return "";
+  // Format methods without units
+  if (
+    formatMethod === "fraction" ||
+    formatMethod === "relative-time" ||
+    formatMethod === "percentage" ||
+    formatMethod === "duration"
+  ) {
+    return "";
+  }
+
+  const formatUnits = (UNITS as any)[formatMethod];
+  if (!formatUnits) return "";
+
+  const units = formatUnits[unitSystem];
+  if (!units || !Array.isArray(units) || units.length === 0) return "";
 
   const baseUnit = units[units.length - 1];
+  if (!baseUnit) return "";
+
   const symbol = verboseUnits
     ? baseUnit.name || baseUnit.symbol
     : baseUnit.symbol;
 
   return customUnits[baseUnit.symbol] || symbol;
+}
+
+/**
+ * Format transfer rate (handles bits vs bytes)
+ */
+function formatTransferRate(value: number, options: HumanizeOptions): string {
+  const {
+    precision = 2,
+    separator = ".",
+    delimiter = ",",
+    spacer = " ",
+    lowercase = false,
+    unitSystem = "metric",
+    showSign = false,
+  } = options;
+
+  const bits = (options as any).bits || false;
+  const perSecond = (options as any).perSecond !== false;
+
+  const absValue = Math.abs(value);
+  const isNegative = value < 0;
+
+  // Get appropriate units (bits or bytes)
+  const units = (UNITS["transfer-rate"][unitSystem] as any)[
+    bits ? "bits" : "bytes"
+  ];
+  const unit = findAppropriateUnit(absValue, units);
+
+  let convertedValue = absValue / unit.value;
+  let formattedNumber = formatWithPrecision(convertedValue, precision, false);
+  formattedNumber = addThousandsDelimiter(
+    formattedNumber,
+    delimiter,
+    separator
+  );
+
+  const symbol = applyCase((unit as any).symbol || "", lowercase);
+  const sign = isNegative ? "-" : showSign && value > 0 ? "+" : "";
+
+  return `${sign}${formattedNumber}${spacer}${symbol}${perSecond ? "/s" : ""}`;
 }
 
 /**

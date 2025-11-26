@@ -1,6 +1,6 @@
 // Core types for humanize-number library
 
-// Format methods
+// Format methods (v2.0 + v3.0)
 export type FormatMethod =
   | "data"
   | "weight"
@@ -11,7 +11,17 @@ export type FormatMethod =
   | "duration"
   | "speed"
   | "volume"
-  | "percentage";
+  | "percentage"
+  // v3.0 new formats
+  | "area"
+  | "energy"
+  | "pressure"
+  | "frequency"
+  | "angle"
+  | "power"
+  | "transfer-rate"
+  | "fraction"
+  | "relative-time";
 
 // Unit systems
 export type UnitSystem = "metric" | "imperial";
@@ -121,4 +131,109 @@ export interface LocaleConfig {
     billion?: string;
     trillion?: string;
   };
+  relativeTime?: {
+    past: string; // e.g., "{0} ago"
+    future: string; // e.g., "in {0}"
+    now: string; // e.g., "just now"
+    seconds: { singular: string; plural: string };
+    minutes: { singular: string; plural: string };
+    hours: { singular: string; plural: string };
+    days: { singular: string; plural: string };
+    weeks: { singular: string; plural: string };
+    months: { singular: string; plural: string };
+    years: { singular: string; plural: string };
+  };
+}
+
+// v3.0 New types
+
+// Custom format plugin
+export interface FormatPlugin {
+  name: string;
+  formatMethod: string;
+  units: Record<UnitSystem, UnitDefinition[]>;
+  defaultOptions?: Partial<HumanizeOptions>;
+  formatter?: (
+    value: number,
+    unit: UnitDefinition,
+    options: HumanizeOptions
+  ) => string;
+}
+
+// Plugin registry
+export interface PluginRegistry {
+  [formatMethod: string]: FormatPlugin;
+}
+
+// Relative time options
+export interface RelativeTimeOptions {
+  locale?: LocaleCode;
+  baseDate?: Date; // Base date for comparison (default: now)
+  threshold?: {
+    seconds?: number; // Default: 60
+    minutes?: number; // Default: 60
+    hours?: number; // Default: 24
+    days?: number; // Default: 7
+    weeks?: number; // Default: 4
+    months?: number; // Default: 12
+  };
+  style?: "long" | "short" | "narrow"; // e.g., "5 minutes" vs "5 min" vs "5m"
+  numeric?: "auto" | "always"; // "auto" uses "yesterday", "tomorrow"
+}
+
+// Value diff/change result
+export interface ValueDiff {
+  value: string; // Humanized difference
+  raw: number; // Raw numeric difference
+  direction: "up" | "down" | "unchanged" | "increase" | "decrease";
+  percent: number; // Percentage change
+  percentString: string; // Humanized percentage
+}
+
+// Template formatter options
+export interface TemplateOptions {
+  values: Record<string, number>;
+  formats: Record<string, FormatMethod | [FormatMethod, HumanizeOptions?]>;
+  defaultFormat?: FormatMethod;
+  defaultOptions?: HumanizeOptions;
+}
+
+// Financial options (v3.0 enhancements)
+export interface FinancialOptions extends HumanizeOptions {
+  currency?: string; // ISO currency code (USD, EUR, GBP, etc.)
+  symbol?: boolean; // Show currency symbol (default: false)
+  symbolPosition?: "prefix" | "suffix"; // Symbol placement (default: 'prefix')
+  crypto?: boolean; // Treat as cryptocurrency (default: false)
+  cryptoSymbol?: string; // Crypto symbol (BTC, ETH, etc.)
+  showChange?: boolean; // Show + or - for stock prices (default: false)
+}
+
+// Transfer rate options
+export interface TransferRateOptions extends HumanizeOptions {
+  bits?: boolean; // Use bits instead of bytes (default: false)
+  perSecond?: boolean; // Show "/s" suffix (default: true)
+}
+
+// Fraction options
+export interface FractionOptions {
+  maxDenominator?: number; // Maximum denominator (default: 100)
+  mixed?: boolean; // Use mixed fractions like "1 1/2" (default: false)
+  improper?: boolean; // Allow improper fractions (default: false)
+  unicode?: boolean; // Use Unicode fractions (½, ⅓, etc.) (default: false)
+}
+
+// LRU Cache options
+export interface CacheOptions {
+  maxSize?: number; // Maximum cache entries (default: 1000)
+  ttl?: number; // Time to live in ms (default: undefined - no expiration)
+  enabled?: boolean; // Enable/disable cache (default: true)
+}
+
+// Global configuration
+export interface GlobalConfig {
+  defaultLocale?: LocaleCode;
+  defaultUnitSystem?: UnitSystem;
+  defaultPrecision?: number;
+  cache?: CacheOptions;
+  plugins?: PluginRegistry;
 }

@@ -28,6 +28,22 @@ export {
   validateNumber,
 } from "./utils";
 
+// Export v3.0 utilities
+export { compareValues, humanizeDiff } from "./formatters/diff";
+export { humanizeFraction, parseFraction } from "./formatters/fraction";
+export {
+  humanizeRelativeTime,
+  timeAgo,
+  timeUntil,
+} from "./formatters/relative-time";
+export {
+  formatKeyValue,
+  formatList,
+  formatTableRow,
+  formatTemplate,
+} from "./formatters/template";
+export { globalCache, LRUCache } from "./utils/cache";
+
 // Export units
 export { UNITS } from "./units";
 
@@ -94,6 +110,53 @@ export function humanizePercentage(
   options?: HumanizeOptions
 ): string {
   return humanizeNumber(value, "percentage", options);
+}
+
+// New v3.0 format methods
+export function humanizeArea(value: number, options?: HumanizeOptions): string {
+  return humanizeNumber(value, "area", options);
+}
+
+export function humanizeEnergy(
+  value: number,
+  options?: HumanizeOptions
+): string {
+  return humanizeNumber(value, "energy", options);
+}
+
+export function humanizePressure(
+  value: number,
+  options?: HumanizeOptions
+): string {
+  return humanizeNumber(value, "pressure", options);
+}
+
+export function humanizeFrequency(
+  value: number,
+  options?: HumanizeOptions
+): string {
+  return humanizeNumber(value, "frequency", options);
+}
+
+export function humanizeAngle(
+  value: number,
+  options?: HumanizeOptions
+): string {
+  return humanizeNumber(value, "angle", options);
+}
+
+export function humanizePower(
+  value: number,
+  options?: HumanizeOptions
+): string {
+  return humanizeNumber(value, "power", options);
+}
+
+export function humanizeTransferRate(
+  value: number,
+  options?: HumanizeOptions
+): string {
+  return humanizeNumber(value, "transfer-rate", options);
 }
 
 // Unit system specific functions

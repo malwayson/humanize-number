@@ -5,6 +5,105 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-11-26
+
+### 🚀 Major Release - Advanced Features & New Format Methods
+
+Version 3.0.0 introduces 7 new format methods and powerful advanced features including relative time formatting, value diff tracking, template system, fraction formatting, and LRU caching. **Fully backward compatible with v2.x**.
+
+### ✨ Added - New Format Methods (7)
+
+- **Area formatting** (`humanizeArea`)
+  - Metric: mm², cm², dm², m², km²
+  - Imperial: in², ft², sq yd, acres
+  - `humanizeArea(1000000, { unitSystem: "metric" })` → "1 km²"
+- **Energy formatting** (`humanizeEnergy`)
+  - Metric: J, kJ, MJ, cal, kcal
+  - Imperial: cal, kcal, BTU
+  - `humanizeEnergy(1000, { unitSystem: "metric" })` → "1 kJ"
+- **Pressure formatting** (`humanizePressure`)
+  - Metric: Pa, kPa, bar, atm
+  - Imperial: PSI
+  - `humanizePressure(101325, { unitSystem: "metric" })` → "1.01 bar"
+- **Frequency formatting** (`humanizeFrequency`)
+  - Hz, kHz, MHz, GHz
+  - `humanizeFrequency(1000000)` → "1 MHz"
+- **Angle formatting** (`humanizeAngle`)
+  - Degrees with ° symbol
+  - `humanizeAngle(45)` → "45 °"
+- **Power formatting** (`humanizePower`)
+  - Metric: W, kW, MW
+  - Imperial: hp (horsepower)
+  - `humanizePower(745.7, { unitSystem: "imperial" })` → "1 hp"
+- **Transfer rate formatting** (`humanizeTransferRate`)
+  - Bytes: B/s, KB/s, MB/s, GB/s
+  - Bits: bps, kbps, Mbps, Gbps
+  - `humanizeTransferRate(1048576)` → "1 MB/s/s"
+
+### 🎯 Added - Advanced Features
+
+- **Relative Time Formatting** (`humanizeRelativeTime`, `timeAgo`, `timeUntil`)
+  - Social media-style time formatting: "2 hours ago", "in 5 days"
+  - 9 locale support (en-US, en-GB, de-DE, fr-FR, es-ES, ja-JP, zh-CN, pt-BR, ru-RU)
+  - 3 style options: long, short, narrow
+  - Custom base date for testing scenarios
+  - `humanizeRelativeTime(new Date(Date.now() - 3600000))` → "1 hour ago"
+- **Value Diff Tracking** (`humanizeDiff`, `compareValues`)
+  - Track and format value changes with direction
+  - Automatic percentage calculation
+  - Works with all format methods
+  - Returns: value, raw, direction, percent, percentString
+  - `humanizeDiff(1024, 2048, "data")` → `{ value: "+1 KB", direction: "increase", percent: 100 }`
+- **Template Formatting** (`formatTemplate`, `formatList`, `formatKeyValue`, `formatTableRow`)
+  - Multi-value string templates with `{key:format}` syntax
+  - Format arrays, key-value pairs, and table rows
+  - Per-placeholder options support
+  - `formatTemplate("Size: {size:data}", { values: { size: 1024 } })` → "Size: 1 KB"
+- **Fraction Formatting** (`humanizeFraction`, `parseFraction`)
+  - Convert decimals to fractions: 0.5 → "1/2"
+  - Mixed fractions: 1.5 → "1 1/2"
+  - Unicode support: 0.75 → "¾"
+  - Bidirectional parsing
+  - `humanizeFraction(0.5, { unicode: true })` → "½"
+- **LRU Cache** (`LRUCache`, `globalCache`)
+  - Least Recently Used caching for performance
+  - Configurable size and TTL
+  - Automatic eviction
+  - Statistics tracking
+  - Enable/disable functionality
+
+### 🔧 Enhanced
+
+- Extended TypeScript types: 15+ new interfaces
+- Total format methods increased from 10 to 17
+- Test coverage expanded from 67 to 126 tests
+- Comprehensive documentation with examples
+- Performance optimizations through caching
+
+### 📦 Package Updates
+
+- Version: 3.0.0
+- Description updated for 17 format methods
+- Maintained tree-shaking and dual ESM/CJS support
+
+## [2.1.0] - 2025-11-25
+
+### Added
+
+- ES Modules (ESM) support with dual CJS/ESM build
+- Minification with Terser (-42% bundle size reduction)
+- Tree-shakeable locale imports
+- Tree-shakeable preset imports
+- GitHub Actions CI/CD workflows
+- README badges (npm, downloads, build, license, TypeScript, bundle size)
+- PayPal support link
+
+### Enhanced
+
+- French locale example in README
+- Module system documentation
+- Package exports for locale/preset splitting
+
 ## [2.0.0] - 2025-11-07
 
 ### 🎉 Major Release - Comprehensive Feature Expansion

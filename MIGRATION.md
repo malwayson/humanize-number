@@ -1,8 +1,147 @@
-# Migration Guide: v1.0 → v2.0
+# Migration Guide
 
-This guide helps you migrate from v1.0 to v2.0 of `@malwayson/humanize-number`.
+Complete migration guide for `@malwayson/humanize-number`.
 
-## 🎉 Good News: Backward Compatible!
+---
+
+## v2.x → v3.0
+
+### 🎉 Good News: Backward Compatible!
+
+v3.0 is **100% backward compatible** with v2.x. All existing code will continue to work without any changes.
+
+### What's New in v3.0
+
+#### 7 New Format Methods
+
+```typescript
+import {
+  humanizeArea,
+  humanizeEnergy,
+  humanizePressure,
+  humanizeFrequency,
+  humanizeAngle,
+  humanizePower,
+  humanizeTransferRate,
+} from "@malwayson/humanize-number";
+
+humanizeArea(1000000, { unitSystem: "metric" }); // "1 km²"
+humanizeEnergy(1000, { unitSystem: "metric" }); // "1 kJ"
+humanizePressure(101325, { unitSystem: "metric" }); // "1.01 bar"
+humanizeFrequency(1000000); // "1 MHz"
+humanizeAngle(45); // "45 °"
+humanizePower(1000, { unitSystem: "metric" }); // "1 kW"
+humanizeTransferRate(1048576); // "1 MB/s/s"
+```
+
+#### Relative Time Formatting (NEW!)
+
+```typescript
+import {
+  humanizeRelativeTime,
+  timeAgo,
+  timeUntil,
+} from "@malwayson/humanize-number";
+
+// Before v3.0
+const hours = Math.floor((Date.now() - timestamp) / 3600000);
+const message = `${hours} hours ago`;
+
+// v3.0
+humanizeRelativeTime(new Date(timestamp)); // "2 hours ago"
+timeAgo(new Date(timestamp)); // "2 hours ago"
+timeUntil(new Date(futureTimestamp)); // "in 5 days"
+
+// Multi-locale support
+humanizeRelativeTime(date, { locale: "de-DE" }); // "vor 2 Stunden"
+```
+
+#### Value Diff Tracking (NEW!)
+
+```typescript
+import { humanizeDiff } from "@malwayson/humanize-number";
+
+// Before v3.0
+const diff = newValue - oldValue;
+const percent = ((diff / oldValue) * 100).toFixed(1);
+
+// v3.0
+const result = humanizeDiff(1024, 2048, "data");
+console.log(result.value); // "+1 KB"
+console.log(result.direction); // "increase"
+console.log(result.percentString); // "+100.0%"
+```
+
+#### Template Formatting (NEW!)
+
+```typescript
+import { formatTemplate } from "@malwayson/humanize-number";
+
+// Before v3.0
+const message = `File: ${humanizeNumber(size, "data")}, Speed: ${humanizeNumber(
+  speed,
+  "speed"
+)}`;
+
+// v3.0
+formatTemplate("File: {size:data}, Speed: {speed:speed}", {
+  values: { size: 1048576, speed: 27.78 },
+  formats: {},
+}); // "File: 1 MB, Speed: 100 km/h"
+```
+
+#### Fraction Formatting (NEW!)
+
+```typescript
+import { humanizeFraction } from "@malwayson/humanize-number";
+
+humanizeFraction(0.5); // "1/2"
+humanizeFraction(0.75, { unicode: true }); // "¾"
+humanizeFraction(1.5, { mixed: true }); // "1 1/2"
+```
+
+#### LRU Cache (NEW!)
+
+```typescript
+import { globalCache } from "@malwayson/humanize-number";
+
+globalCache.enable(); // Enabled by default
+globalCache.disable();
+globalCache.clear();
+
+const stats = globalCache.getStats();
+console.log(stats.size, stats.maxSize, stats.enabled);
+```
+
+### New TypeScript Types
+
+```typescript
+import type {
+  RelativeTimeOptions,
+  ValueDiff,
+  TemplateOptions,
+  FractionOptions,
+  CacheOptions,
+} from "@malwayson/humanize-number";
+```
+
+### Breaking Changes
+
+**None!** Version 3.0.0 is fully backward compatible.
+
+### Upgrading
+
+```bash
+npm install @malwayson/humanize-number@latest
+```
+
+All tests should pass without changes. Adopt new features gradually.
+
+---
+
+## v1.0 → v2.0
+
+### 🎉 Good News: Backward Compatible!
 
 v2.0 is **100% backward compatible** with v1.0. All existing code will continue to work without any changes.
 
