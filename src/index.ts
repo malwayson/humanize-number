@@ -29,20 +29,20 @@ export {
 } from "./utils";
 
 // Export v3.0 utilities
-export { LRUCache, globalCache } from "./utils/cache";
+export { compareValues, humanizeDiff } from "./formatters/diff";
+export { humanizeFraction, parseFraction } from "./formatters/fraction";
 export {
   humanizeRelativeTime,
   timeAgo,
   timeUntil,
 } from "./formatters/relative-time";
-export { humanizeDiff, compareValues } from "./formatters/diff";
 export {
-  formatTemplate,
-  formatList,
   formatKeyValue,
+  formatList,
   formatTableRow,
+  formatTemplate,
 } from "./formatters/template";
-export { humanizeFraction, parseFraction } from "./formatters/fraction";
+export { globalCache, LRUCache } from "./utils/cache";
 
 // Export units
 export { UNITS } from "./units";
@@ -113,10 +113,7 @@ export function humanizePercentage(
 }
 
 // New v3.0 format methods
-export function humanizeArea(
-  value: number,
-  options?: HumanizeOptions
-): string {
+export function humanizeArea(value: number, options?: HumanizeOptions): string {
   return humanizeNumber(value, "area", options);
 }
 

@@ -156,8 +156,7 @@ export function parseFraction(fraction: string): number {
   const mixedMatch = normalized.match(/^(-?)(\d+)\s+(\d+)\/(\d+)$/);
   if (mixedMatch) {
     const [, sign, whole, num, den] = mixedMatch;
-    const decimal =
-      parseInt(whole) + parseInt(num) / parseInt(den);
+    const decimal = parseInt(whole) + parseInt(num) / parseInt(den);
     return sign === "-" ? -decimal : decimal;
   }
 

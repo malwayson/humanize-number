@@ -1,4 +1,4 @@
-import { TemplateOptions, FormatMethod, HumanizeOptions } from "../types";
+import { FormatMethod, HumanizeOptions, TemplateOptions } from "../types";
 import { humanizeNumber } from "./index";
 
 /**

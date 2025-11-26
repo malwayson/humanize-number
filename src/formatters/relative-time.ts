@@ -1,4 +1,4 @@
-import { RelativeTimeOptions, LocaleCode } from "../types";
+import { LocaleCode, RelativeTimeOptions } from "../types";
 
 /**
  * Default relative time configuration
@@ -164,7 +164,8 @@ export function humanizeRelativeTime(
   const absDiff = Math.abs(diff);
 
   // Get locale strings
-  const localeStrings = RELATIVE_TIME_LOCALES[locale] || RELATIVE_TIME_LOCALES["en-US"];
+  const localeStrings =
+    RELATIVE_TIME_LOCALES[locale] || RELATIVE_TIME_LOCALES["en-US"];
 
   // Just now (less than a few seconds)
   if (absDiff < 3000) {

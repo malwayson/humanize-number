@@ -1,24 +1,24 @@
 import {
-  humanizeArea,
-  humanizeEnergy,
-  humanizePressure,
-  humanizeFrequency,
+  LRUCache,
+  compareValues,
+  formatKeyValue,
+  formatList,
+  formatTableRow,
+  formatTemplate,
+  globalCache,
   humanizeAngle,
+  humanizeArea,
+  humanizeDiff,
+  humanizeEnergy,
+  humanizeFraction,
+  humanizeFrequency,
   humanizePower,
-  humanizeTransferRate,
+  humanizePressure,
   humanizeRelativeTime,
+  humanizeTransferRate,
+  parseFraction,
   timeAgo,
   timeUntil,
-  humanizeDiff,
-  compareValues,
-  formatTemplate,
-  formatList,
-  formatKeyValue,
-  formatTableRow,
-  humanizeFraction,
-  parseFraction,
-  LRUCache,
-  globalCache,
 } from "./src/index";
 
 describe("humanize-number v3.0 - New Format Methods", () => {
@@ -48,12 +48,16 @@ describe("humanize-number v3.0 - New Format Methods", () => {
   describe("Energy Formatting", () => {
     test("formats metric energy", () => {
       expect(humanizeEnergy(1000, { unitSystem: "metric" })).toBe("1 kJ");
-      expect(humanizeEnergy(1000000, { unitSystem: "metric" })).toBe("239.01 kcal");
+      expect(humanizeEnergy(1000000, { unitSystem: "metric" })).toBe(
+        "239.01 kcal"
+      );
       expect(humanizeEnergy(500, { unitSystem: "metric" })).toBe("500 J");
     });
 
     test("formats imperial energy", () => {
-      expect(humanizeEnergy(1055.06, { unitSystem: "imperial" })).toBe("252.17 cal");
+      expect(humanizeEnergy(1055.06, { unitSystem: "imperial" })).toBe(
+        "252.17 cal"
+      );
       expect(humanizeEnergy(2000, { unitSystem: "imperial" })).toBe(
         "478.01 cal"
       );
@@ -156,33 +160,31 @@ describe("humanize-number v3.0 - Relative Time", () => {
       const now = new Date("2024-01-01T12:00:00Z");
       const future = new Date("2024-01-01T13:00:00Z");
 
-      expect(humanizeRelativeTime(future, { baseDate: now })).toBe(
-        "in 1 hour"
-      );
+      expect(humanizeRelativeTime(future, { baseDate: now })).toBe("in 1 hour");
     });
 
     test("supports different locales", () => {
       const now = new Date("2024-01-01T12:00:00Z");
       const past = new Date("2024-01-01T11:00:00Z");
 
-      expect(humanizeRelativeTime(past, { baseDate: now, locale: "en-US" })).toBe(
-        "1 hour ago"
-      );
-      expect(humanizeRelativeTime(past, { baseDate: now, locale: "de-DE" })).toBe(
-        "vor 1 Stunde"
-      );
-      expect(humanizeRelativeTime(past, { baseDate: now, locale: "fr-FR" })).toBe(
-        "il y a 1 heure"
-      );
+      expect(
+        humanizeRelativeTime(past, { baseDate: now, locale: "en-US" })
+      ).toBe("1 hour ago");
+      expect(
+        humanizeRelativeTime(past, { baseDate: now, locale: "de-DE" })
+      ).toBe("vor 1 Stunde");
+      expect(
+        humanizeRelativeTime(past, { baseDate: now, locale: "fr-FR" })
+      ).toBe("il y a 1 heure");
     });
 
     test("supports different styles", () => {
       const now = new Date("2024-01-01T12:00:00Z");
       const past = new Date("2024-01-01T11:00:00Z");
 
-      expect(
-        humanizeRelativeTime(past, { baseDate: now, style: "long" })
-      ).toBe("1 hour ago");
+      expect(humanizeRelativeTime(past, { baseDate: now, style: "long" })).toBe(
+        "1 hour ago"
+      );
       expect(
         humanizeRelativeTime(past, { baseDate: now, style: "short" })
       ).toBe("1 hou ago");
@@ -348,7 +350,10 @@ describe("humanize-number v3.0 - Templates", () => {
 
   describe("formatKeyValue", () => {
     test("formats key-value pairs", () => {
-      const result = formatKeyValue({ "File Size": 1024 }, { "File Size": "data" });
+      const result = formatKeyValue(
+        { "File Size": 1024 },
+        { "File Size": "data" }
+      );
 
       expect(result).toBe("File Size: 1 KB");
     });
@@ -368,10 +373,7 @@ describe("humanize-number v3.0 - Templates", () => {
 
   describe("formatTableRow", () => {
     test("formats table rows", () => {
-      const result = formatTableRow(
-        [1024, 100000],
-        ["data", "speed"]
-      );
+      const result = formatTableRow([1024, 100000], ["data", "speed"]);
 
       expect(result).toContain("1 KB");
       expect(result).toContain("360,000 km/h");

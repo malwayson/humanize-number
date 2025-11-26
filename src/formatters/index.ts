@@ -161,10 +161,10 @@ function getUnitsForFormat(
     const bits = (options as any).bits || false;
     return (UNITS[formatMethod][unitSystem] as any)[bits ? "bits" : "bytes"];
   }
-  
+
   const formatUnits = (UNITS as any)[formatMethod];
   if (!formatUnits) return [];
-  
+
   return formatUnits[unitSystem] || [];
 }
 
@@ -189,7 +189,7 @@ function getBaseUnit(
 
   const formatUnits = (UNITS as any)[formatMethod];
   if (!formatUnits) return "";
-  
+
   const units = formatUnits[unitSystem];
   if (!units || !Array.isArray(units) || units.length === 0) return "";
 
@@ -206,10 +206,7 @@ function getBaseUnit(
 /**
  * Format transfer rate (handles bits vs bytes)
  */
-function formatTransferRate(
-  value: number,
-  options: HumanizeOptions
-): string {
+function formatTransferRate(value: number, options: HumanizeOptions): string {
   const {
     precision = 2,
     separator = ".",
@@ -234,7 +231,11 @@ function formatTransferRate(
 
   let convertedValue = absValue / unit.value;
   let formattedNumber = formatWithPrecision(convertedValue, precision, false);
-  formattedNumber = addThousandsDelimiter(formattedNumber, delimiter, separator);
+  formattedNumber = addThousandsDelimiter(
+    formattedNumber,
+    delimiter,
+    separator
+  );
 
   const symbol = applyCase((unit as any).symbol || "", lowercase);
   const sign = isNegative ? "-" : showSign && value > 0 ? "+" : "";

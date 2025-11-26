@@ -1,4 +1,4 @@
-import { ValueDiff, FormatMethod, HumanizeOptions } from "../types";
+import { FormatMethod, HumanizeOptions, ValueDiff } from "../types";
 import { humanizeNumber } from "./index";
 
 /**

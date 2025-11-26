@@ -37,7 +37,11 @@ humanizeTransferRate(1048576); // "1 MB/s/s"
 #### Relative Time Formatting (NEW!)
 
 ```typescript
-import { humanizeRelativeTime, timeAgo, timeUntil } from "@malwayson/humanize-number";
+import {
+  humanizeRelativeTime,
+  timeAgo,
+  timeUntil,
+} from "@malwayson/humanize-number";
 
 // Before v3.0
 const hours = Math.floor((Date.now() - timestamp) / 3600000);
@@ -74,7 +78,10 @@ console.log(result.percentString); // "+100.0%"
 import { formatTemplate } from "@malwayson/humanize-number";
 
 // Before v3.0
-const message = `File: ${humanizeNumber(size, "data")}, Speed: ${humanizeNumber(speed, "speed")}`;
+const message = `File: ${humanizeNumber(size, "data")}, Speed: ${humanizeNumber(
+  speed,
+  "speed"
+)}`;
 
 // v3.0
 formatTemplate("File: {size:data}, Speed: {speed:speed}", {

@@ -60,6 +60,7 @@ humanizeNumber(1234567, "generic", { ...compact, locale: enUS });
 ## ✨ What's New in v3.0
 
 ### 🚀 New Format Methods (7 additions)
+
 - 📐 **Area formatting** - m², km², acres, square feet
 - ⚡ **Energy formatting** - Joules, kJ, MJ, BTU, calories
 - 💨 **Pressure formatting** - Pa, kPa, bar, PSI
@@ -69,6 +70,7 @@ humanizeNumber(1234567, "generic", { ...compact, locale: enUS });
 - 🌐 **Transfer rate formatting** - KB/s, MB/s, Mbps (bits/bytes)
 
 ### 🎯 Advanced Features
+
 - ⏰ **Relative time formatting** - "2 hours ago", "in 5 days" (9 locales, 3 styles)
 - 📊 **Value diff tracking** - Calculate and format value changes with percentages
 - 📝 **Template formatting** - Multi-value string templates with placeholders
@@ -76,6 +78,7 @@ humanizeNumber(1234567, "generic", { ...compact, locale: enUS });
 - 🚀 **LRU Cache** - Built-in caching for performance optimization
 
 ### 📈 From v2.0
+
 - 🌡️ Temperature, ⏱️ Duration, 🚀 Speed, 💧 Volume, 📊 Percentage
 - 🌍 Localization (9 locales), 🎯 Presets, 📦 Batch processing
 - 🔍 Comparison utilities, 🧩 Tree-shaking support
@@ -330,7 +333,7 @@ humanizeArea(4046.86, { unitSystem: "imperial" }); // "1 ac" (acre)
 humanizeArea(1, { unitSystem: "imperial" }); // "1.2 sq yd"
 
 // Verbose units
-humanizeArea(1000000, { unitSystem: "metric", verboseUnits: true }); 
+humanizeArea(1000000, { unitSystem: "metric", verboseUnits: true });
 // "1 square kilometers"
 ```
 
@@ -425,7 +428,11 @@ humanizeTransferRate(1000000, { bits: true } as any); // "1 Mbps/s"
 Format timestamps as human-readable relative time expressions:
 
 ```typescript
-import { humanizeRelativeTime, timeAgo, timeUntil } from "@malwayson/humanize-number";
+import {
+  humanizeRelativeTime,
+  timeAgo,
+  timeUntil,
+} from "@malwayson/humanize-number";
 
 // Past times
 humanizeRelativeTime(new Date(Date.now() - 3600000)); // "1 hour ago"
@@ -499,8 +506,12 @@ compareValues(100, 100); // 0 (equal)
 Format multiple values in a single template string:
 
 ```typescript
-import { formatTemplate, formatList, formatKeyValue, formatTableRow } 
-  from "@malwayson/humanize-number";
+import {
+  formatTemplate,
+  formatList,
+  formatKeyValue,
+  formatTableRow,
+} from "@malwayson/humanize-number";
 
 // Template with placeholders
 const result = formatTemplate(
@@ -520,10 +531,10 @@ formatTemplate("Size: {size:data}", {
 }); // "Size: 1 KB"
 
 // Format arrays
-formatList([1024, 2048, 4096], "data"); 
+formatList([1024, 2048, 4096], "data");
 // "1 KB, 2 KB, 4 KB"
 
-formatList([1024, 2048], "data", {}, " | "); 
+formatList([1024, 2048], "data", {}, " | ");
 // "1 KB | 2 KB"
 
 // Format key-value pairs
@@ -581,9 +592,9 @@ Built-in caching for improved performance:
 import { LRUCache, globalCache } from "@malwayson/humanize-number";
 
 // Create custom cache
-const cache = new LRUCache<string, number>({ 
-  maxSize: 100,  // Maximum entries
-  ttl: 60000,    // Time to live in ms (optional)
+const cache = new LRUCache<string, number>({
+  maxSize: 100, // Maximum entries
+  ttl: 60000, // Time to live in ms (optional)
 });
 
 cache.set("key", 123);
@@ -596,9 +607,9 @@ globalCache.clear();
 
 // Get statistics
 const stats = globalCache.getStats();
-console.log(stats.size);      // Current cache size
-console.log(stats.maxSize);   // Maximum size
-console.log(stats.enabled);   // Cache enabled status
+console.log(stats.size); // Current cache size
+console.log(stats.maxSize); // Maximum size
+console.log(stats.enabled); // Cache enabled status
 ```
 
 ## 🎯 Presets
