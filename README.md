@@ -57,6 +57,78 @@ humanizeNumber(1234567, "generic", { ...compact, locale: enUS });
 - ✅ **Faster load times**: Reduced JavaScript payload
 - ✅ **ESM & CJS**: Works with both module systems
 
+## 🎉 What's New in v3.1.0
+
+### 🔌 Plugin System - Create Custom Format Methods!
+
+```typescript
+import { registerPlugin, humanizeNumber } from "@malwayson/humanize-number";
+
+// Register a custom plugin
+registerPlugin({
+  name: "seismic",
+  formatMethod: "seismic",
+  units: {
+    metric: [{ value: 1, symbol: "M", name: "magnitude" }],
+    imperial: [{ value: 1, symbol: "M", name: "magnitude" }],
+  },
+  defaultOptions: { precision: 1 },
+});
+
+// Use it immediately!
+humanizeNumber(7.5, "seismic"); // "7.5 M"
+humanizeNumber(6.8, "seismic"); // "6.8 M"
+```
+
+**6 Example Plugins Included:**
+
+- 🌍 **Seismic** - Earthquake magnitude (Richter scale)
+- ☢️ **Radiation** - Radiation dose (Sieverts, rem)
+- ⛰️ **Altitude** - Elevation (feet, meters)
+- 🔊 **Decibel** - Sound levels
+- 🧪 **pH** - Acidity/alkalinity (0-14 scale)
+- 💡 **Luminosity** - Light output (lumens)
+
+```typescript
+import { examplePlugins } from "@malwayson/humanize-number";
+
+registerPlugin(examplePlugins.radiation);
+humanizeNumber(0.001, "radiation"); // "1.00 mSv"
+
+registerPlugin(examplePlugins.decibel);
+humanizeNumber(85, "decibel"); // "85.0 dB"
+```
+
+### 💰 Enhanced Currency Formatting
+
+```typescript
+import { humanizeCurrency } from "@malwayson/humanize-number";
+
+// Custom currency symbols
+humanizeCurrency(1500000, { currencySymbol: "€" }); // "€1.50 M"
+humanizeCurrency(1500000, { currencySymbol: "£" }); // "£1.50 M"
+humanizeCurrency(1500000, { currencySymbol: "¥" }); // "¥1.50 M"
+humanizeCurrency(1500000, { currencySymbol: "₿" }); // "₿1.50 M"
+
+// Control symbol position
+humanizeCurrency(2500000, {
+  currencySymbol: "EUR",
+  currencyPosition: "suffix",
+}); // "2.50 M EUR"
+
+// Stock market caps
+humanizeCurrency(2500000000000, {
+  currencySymbol: "$",
+  precision: 1,
+}); // "$2.5 T"
+```
+
+**Supported Symbols:** $, €, £, ¥, ₹, ₽, ₿, CHF, USD, EUR, and more!
+
+[📖 Complete v3.1.0 Guide](./V3.1.0_GUIDE.md) | [🎉 Release Notes](./V3.1.0_RELEASE.md) | [💻 Examples](./examples/v3.1.0-demo.ts)
+
+---
+
 ## ✨ What's New in v3.0
 
 ### 🚀 New Format Methods (7 additions)
@@ -86,7 +158,9 @@ humanizeNumber(1234567, "generic", { ...compact, locale: enUS });
 ## Features
 
 - 🔢 Convert numbers to human-readable formats
-- 📊 Support for **17 format methods** (data, weight, distance, currency, temperature, duration, speed, volume, percentage, area, energy, pressure, frequency, angle, power, transfer-rate, generic)
+- 📊 Support for **17+ format methods** (data, weight, distance, currency, temperature, duration, speed, volume, percentage, area, energy, pressure, frequency, angle, power, transfer-rate, generic)
+- 🔌 **Plugin System** (v3.1.0) - Create custom format methods for any unit type
+- 💰 **Enhanced Currency** (v3.1.0) - Customizable symbols ($, €, £, ¥, ₿) and positioning
 - 🌍 **Multiple unit systems**: Metric and Imperial support
 - 🌐 **Internationalization**: 9 built-in locales (en-US, de-DE, fr-FR, es-ES, ja-JP, zh-CN, pt-BR, ru-RU, en-GB)
 - ⏰ **Relative time** formatting with multi-locale support
@@ -98,7 +172,7 @@ humanizeNumber(1234567, "generic", { ...compact, locale: enUS });
 - 🔄 Parse humanized strings back to numbers
 - 🔄 **Unit conversion** between metric and imperial systems
 - 📝 Full TypeScript support with comprehensive type definitions
-- 🧪 Comprehensive test coverage (126 tests)
+- 🧪 Comprehensive test coverage (178 tests)
 - 🚀 Zero dependencies
 - 📦 Batch processing capabilities
 - 🔍 Built-in comparison and sorting utilities

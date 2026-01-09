@@ -78,6 +78,8 @@ export interface HumanizeOptions {
   maxDecimals?: number; // Maximum decimal places (auto-adjust)
   minValue?: number; // Minimum value before switching units
   showSign?: boolean; // Show + for positive numbers (default: false)
+  currencySymbol?: string; // Currency symbol for currency formatting (default: '$')
+  currencyPosition?: "prefix" | "suffix"; // Position of currency symbol (default: 'prefix')
 }
 
 // Range formatting options

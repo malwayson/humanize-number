@@ -1,7 +1,7 @@
 {
   "name": "@malwayson/humanize-number",
-  "version": "3.0.1",
-  "description": "Convert numbers to human readable format with support for 17 format methods including area, energy, pressure, frequency, angle, power, transfer-rate, relative time, fractions, and more. Features LRU caching, templates, value diff tracking, metric/imperial unit systems, localization, presets, and batch processing.",
+  "version": "3.1.0",
+  "description": "Convert numbers to human readable format with support for 17+ format methods. Features v3.1: Plugin System for custom formats, customizable currency symbols, 6 example plugins (seismic, radiation, altitude, decibel, pH, luminosity). Includes LRU caching, templates, value diff tracking, metric/imperial units, 9 locales, presets, and batch processing.",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",

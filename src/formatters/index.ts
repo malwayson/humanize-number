@@ -1,11 +1,13 @@
 import { convertTemperature } from "../converters";
+import { formatWithPlugin, hasPlugin } from "../plugins";
 import {
   FormatMethod,
   HumanizeOptions,
   TemperatureScale,
+  UnitDefinition,
   UnitSystem,
 } from "../types";
-import { UNITS } from "../units";
+import { CURRENCY_UNITS, UNITS } from "../units";
 import {
   addThousandsDelimiter,
   applyCase,
@@ -23,6 +25,11 @@ export function humanizeNumber(
   formatMethod: FormatMethod = "generic",
   options: HumanizeOptions = {}
 ): string {
+  // Check if it's a plugin format method
+  if (hasPlugin(formatMethod)) {
+    return formatWithPlugin(value, formatMethod, options);
+  }
+
   // Handle special cases first
   if (!isFinite(value)) {
     if (isNaN(value)) return "NaN";
@@ -54,6 +61,17 @@ export function humanizeNumber(
   } = options;
 
   if (validValue === 0) {
+    // Special handling for currency to include symbol
+    if (formatMethod === "currency") {
+      const currencySymbol = options.currencySymbol || "$";
+      const currencyPosition = options.currencyPosition || "prefix";
+      if (currencyPosition === "prefix") {
+        return `${currencySymbol}0`;
+      } else {
+        return `0${options.spacer || " "}${currencySymbol}`;
+      }
+    }
+
     const baseUnit = getBaseUnit(
       formatMethod,
       unitSystem,
@@ -92,6 +110,11 @@ export function humanizeNumber(
   // Handle transfer-rate (special case with bits/bytes)
   if (formatMethod === "transfer-rate") {
     return formatTransferRate(validValue, options);
+  }
+
+  // Handle currency (special case with currency symbol)
+  if (formatMethod === "currency") {
+    return formatCurrency(validValue, options);
   }
 
   // Get absolute value for calculations
@@ -241,6 +264,65 @@ function formatTransferRate(value: number, options: HumanizeOptions): string {
   const sign = isNegative ? "-" : showSign && value > 0 ? "+" : "";
 
   return `${sign}${formattedNumber}${spacer}${symbol}${perSecond ? "/s" : ""}`;
+}
+
+/**
+ * Format currency with currency symbol support
+ */
+function formatCurrency(value: number, options: HumanizeOptions): string {
+  const {
+    precision = 2,
+    separator = ".",
+    delimiter = ",",
+    spacer = " ",
+    lowercase = false,
+    unitSystem = "metric",
+    showSign = false,
+    currencySymbol = "$",
+    currencyPosition = "prefix",
+    approximate = false,
+    verboseUnits = false,
+  } = options;
+
+  const absValue = Math.abs(value);
+  const isNegative = value < 0;
+
+  // Get currency units
+  const units = CURRENCY_UNITS[unitSystem];
+  const unit = findAppropriateUnit(absValue, units) as UnitDefinition;
+
+  let convertedValue = absValue / unit.value;
+
+  // For currency, always preserve precision (don't remove trailing zeros)
+  let formattedNumber = convertedValue.toFixed(precision);
+  formattedNumber = addThousandsDelimiter(
+    formattedNumber,
+    delimiter,
+    separator
+  );
+
+  // Get unit symbol or name (K, M, B, T or thousand, million, billion, trillion)
+  let unitSymbol = verboseUnits ? unit.name || unit.symbol : unit.symbol;
+
+  if (lowercase) {
+    unitSymbol = unitSymbol.toLowerCase();
+  }
+
+  // Apply approximation symbol
+  const approxSymbol = approximate ? "~" : "";
+
+  // Apply sign
+  const sign = isNegative ? "-" : showSign && value > 0 ? "+" : "";
+
+  // Determine spacing
+  const space = unitSymbol ? spacer : "";
+
+  // Build the formatted string based on currency position
+  if (currencyPosition === "prefix") {
+    return `${approxSymbol}${sign}${currencySymbol}${formattedNumber}${space}${unitSymbol}`;
+  } else {
+    return `${approxSymbol}${sign}${formattedNumber}${space}${unitSymbol}${spacer}${currencySymbol}`;
+  }
 }
 
 /**

@@ -5,6 +5,111 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-01-09
+
+### 🎉 Minor Release - Plugin System & Currency Enhancements
+
+Version 3.1.0 introduces a powerful plugin system for custom format methods and enhanced currency formatting with customizable symbols and positioning. **Fully backward compatible with v3.0.x**.
+
+### ✨ Added - Plugin System
+
+- **Custom Format Plugins**
+  - Register custom format methods with `registerPlugin()`
+  - Create domain-specific formatters for any unit type
+  - Full TypeScript support with `FormatPlugin` interface
+  - Plugin management: `getPlugin()`, `hasPlugin()`, `getAllPlugins()`, `unregisterPlugin()`, `clearPlugins()`
+  - Parse support with `parseWithPlugin()`
+- **Example Plugins** (6 included)
+
+  - **Seismic**: Earthquake magnitude (Richter scale)
+    - `registerPlugin(examplePlugins.seismic)`
+    - `humanizeNumber(7.5, "seismic")` → "7.5 M"
+  - **Radiation**: Radiation dose in Sieverts/rem
+    - `humanizeNumber(0.000025, "radiation")` → "25.00 μSv"
+  - **Altitude**: Elevation in feet/meters
+    - `humanizeNumber(10000, "altitude")` → "33 ft"
+  - **Decibel**: Sound levels
+    - `humanizeNumber(85, "decibel")` → "85.0 dB"
+  - **pH**: pH levels (0-14 scale with auto-clamping)
+    - `humanizeNumber(7.4, "ph")` → "7.4 pH"
+  - **Luminosity**: Light output in lumens
+    - `humanizeNumber(5000, "luminosity")` → "5 klm"
+
+- **Plugin Features**
+  - Custom formatters for complex logic
+  - Bidirectional parsing support
+  - Default options per plugin
+  - Metric and imperial unit systems
+  - Seamless integration with `humanizeNumber()`
+
+### ✨ Added - Currency Symbol Enhancements
+
+- **`currencySymbol` option**: Customize currency symbol (default: "$")
+  - `humanizeCurrency(1500, { currencySymbol: "€" })` → "€1.50 K"
+  - Supports: $, €, £, ¥, ₹, ₽, ₿, CHF, USD, etc.
+- **`currencyPosition` option**: Control symbol placement
+  - `"prefix"` (default): `"$1.50 M"`
+  - `"suffix"`: `"1.50 M €"`
+- **Real-world examples**
+  - Stock market: `humanizeCurrency(2.5e12, { currencySymbol: "$" })` → "$2.50 T"
+  - European format: `humanizeCurrency(5e6, { currencySymbol: "EUR", currencyPosition: "suffix" })` → "5.00 M EUR"
+  - Cryptocurrency: `humanizeCurrency(50000, { currencySymbol: "₿" })` → "₿50.00 K"
+
+### 📚 Documentation
+
+- New comprehensive guide: `V3.1.0_GUIDE.md`
+- Example file: `examples/v3.1.0-features.ts`
+- Plugin development best practices
+- Migration guide from v3.0 to v3.1
+
+### 🧪 Tests
+
+- 40+ new tests for plugin system (`index.v3.1.test.ts`)
+- 30+ new tests for currency symbols (`currency-symbol.test.ts`)
+- All example plugins tested
+- Parser functionality tests
+- Edge case coverage
+
+### 🔧 Technical
+
+- New `src/plugins/` directory with plugin infrastructure
+- `FormatPlugin` TypeScript interface
+- Plugin registry with Map-based storage
+- Zero breaking changes from v3.0.x
+- Bundle size: ~20 KB (main + plugins), maintained from v3.0
+
+### 📦 Exports
+
+New exports in v3.1.0:
+
+```typescript
+export {
+  registerPlugin,
+  unregisterPlugin,
+  getPlugin,
+  hasPlugin,
+  getAllPlugins,
+  getRegisteredFormatMethods,
+  clearPlugins,
+  formatWithPlugin,
+  parseWithPlugin,
+} from "@malwayson/humanize-number";
+export type { FormatPlugin } from "@malwayson/humanize-number";
+export { examplePlugins } from "@malwayson/humanize-number";
+```
+
+### 🎯 What's Next
+
+See [V3_MINOR_RELEASES_ROADMAP.md](./V3_MINOR_RELEASES_ROADMAP.md) for upcoming features:
+
+- **v3.2.0**: Financial enhancements & advanced parsing
+- **v3.3.0**: Animations & visual features
+- **v3.4.0**: Deno, Bun, Edge runtime support
+- **v3.5.0**: Advanced use cases (batch processing, custom units)
+- **v3.6.0**: 50+ locales & RTL support
+
+---
+
 ## [3.0.1] - 2025-11-26
 
 ### 🔧 Fixed

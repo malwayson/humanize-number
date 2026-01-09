@@ -44,6 +44,21 @@ export {
 } from "./formatters/template";
 export { globalCache, LRUCache } from "./utils/cache";
 
+// Export v3.1.0 Plugin System
+export {
+  clearPlugins,
+  formatWithPlugin,
+  getAllPlugins,
+  getPlugin,
+  getRegisteredFormatMethods,
+  hasPlugin,
+  parseWithPlugin,
+  registerPlugin,
+  unregisterPlugin,
+} from "./plugins";
+export type { FormatPlugin } from "./plugins";
+export { examplePlugins } from "./plugins/examples";
+
 // Export units
 export { UNITS } from "./units";
 
